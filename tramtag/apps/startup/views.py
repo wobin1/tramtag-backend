@@ -1,37 +1,63 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Startup, Founders
-from .serializers import StartupSerializer, FounderSerializer
-from datetime import datetime
+from .models import Startup
+from .serializers import StartupSerializer
 from apps.utils.utilities import Utility
+from apps.utils.request_helper import RequestHelper
 
 
-class Startup(APIView):
+class StartupView(APIView):
     def post(self, request):
         request_data = request.data
 
-        serializer = StartupSerializer(data=request_data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-
-        response = Utility.get_response(
-            self,
-            "success",
-            "Startup created successfully!!!",
-            serializer.data,
-            status.HTTP_200_OK,
+        request_response = RequestHelper.post_object(
+            self, request_data, StartupSerializer, "Startup created successfully!!!"
         )
-
-        return response
+        print(request_response)
+        return request_response
 
     def get(self, request):
-        user = CustomUser.objects.all()
+        startup = Startup.objects.all()
 
-        serializer = UserSerializer(user, many=True)
-
-        response = Utility.get_response(
-            self, "success", "Users fetched!!!", serializer.data, status.HTTP_200_OK
+        request_response = RequestHelper.get_object(
+            self, startup, StartupSerializer, "Startups fetched!!!"
         )
 
-        return response
+        return request_response
+
+
+class SingleStartupView(APIView):
+    def get(self, request, id):
+        try:
+            startup = Utility.verify_id(self, id, Startup)
+            print(startup)
+        except Exception as e:
+            print(str(e))
+            response = Utility.get_response(self, "error", "invalid startup ID", "No data", status.HTTP_400_BAD_REQUEST)
+            return response
+
+        request_response = RequestHelper.get_object_detail(
+            self, startup, StartupSerializer, "Startup fetched!!!"
+        )
+
+        return request_response
+
+    def put(self, request, id):
+        request_data = request.data
+        startup = Utility().verify_id(id, Startup)
+
+        request_response = RequestHelper.put_object_update(
+            self, startup, request_data, StartupSerializer, "Startup Updated!!!"
+        )
+
+        return request_response
+
+    def delete(self, request, id):
+        startup = Utility().verify_id(id, Startup)
+
+        request_response = RequestHelper.delete_object_delete(
+            self, startup, "startup deleted!!!"
+        )
+
+        return request_response

@@ -3,49 +3,40 @@ from .models import Startup
 
 
 class StartupSerializer(serializers.ModelSerializer):
+    pass
     class Meta:
         model = Startup
         fields = [
             "id",
             "startup_name",
+            "startup_email",
             "startup_location",
             "startup_industry",
             "startup_description",
-            "founded_in"
+            "startup_website_url",
+            "startup_phone_number",
+            "startup_linkedin_profile",
+            "founded_in",
+            "founders",
+            "additional_info",
         ]
 
 
         def create(self, validated_data):
             startup = Startup(
                 startup_name = validated_data["startup_name"],
+                startup_email = validated_data["startup_email"],
                 startup_location = validated_data["startup_location"],
                 startup_industry = validated_data["startup_industry"],
-                startup_description = validated_data["startup_description"]
+                startup_linkedin_profile = validated_data["startup_linkedin"],
+                startup_phone_number = validated_data["phone_number"],
+                StartupSerializer = validated_data["phone_number"],
+                startup_description = validated_data["startup_description"],
+                startup_website_url = validated_data["startup_website_url"]
+                
             )
 
             startup.save()
-            return alawi
+            return startup
 
 
-class FounderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Startup
-        fields = [
-            "id",
-            "startup_id",
-            "founder_first_name",
-            "founder_last_name",
-            "founder_email"
-        ]
-
-
-        def create(self, validated_data):
-            founder = Startup(
-                startup_id = validated_data["startup_name"],
-                founder_first_name = validated_data["startup_location"],
-                founder_last_name = validated_data["startup_industry"],
-                founder_email = validated_data["startup_description"]
-            )
-
-            founder.save()
-            return alawi

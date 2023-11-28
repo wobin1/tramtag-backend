@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import Startup
+from .views import StartupView, SingleStartupView
 
 
 urlpatterns = [
-    path('startup/', Startup.as_view())
+    path('startups/', StartupView.as_view()),
+    path('startup/<str:id>', SingleStartupView.as_view())
 ]

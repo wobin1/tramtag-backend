@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.utils',
     'apps.startup',
+    'apps.founder',
+    'corsheaders',
     'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,9 +83,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tramtag_db',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
+    
 }
 
 
@@ -136,3 +144,22 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'takartec@gmail.com'
 EMAIL_HOST_PASSWORD = 'ylgorrnotrnqwmlr'
 # EMAIL_HOST_PASSWORD = 'ajosnclncesyvdml'
+
+
+CORS_ALLOWED_ORIGINS = [
+    # Add the allowed origins (domains) for your CORS requests
+    'http://localhost:4200',
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+]
+CORS_ALLOW_HEADERS = [
+    'X-Requested-With',
+    'Content-Type',
+    'Authorization',
+]

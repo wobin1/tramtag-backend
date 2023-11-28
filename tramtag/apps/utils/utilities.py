@@ -8,7 +8,7 @@ import jwt
 
 
 class Utility:
-
+    # this code return
     def get_response(self, status, message, data, status_code):
         status= status_code,
         message= message,
@@ -23,19 +23,22 @@ class Utility:
 
         return response_data
 
-    def verify_user_id(self, pk):
+    # this code verifies user id
+    def verify_id(self, pk, instance):
+        # instance from the parameters means the name of the model
         try:
-            return CustomUser.objects.get(pk=pk)
-        except CustomUser.DoesNotExist:
+            return instance.objects.get(pk=pk)
+        except instance.DoesNotExist:
             raise Http404
+            return False
 
     # This code is verifying the users' email
-    def verify_user_email(self, email):
+    def verify_email(self, email):
         print("verifying email")
         try:
             user = CustomUser.objects.get(email=email)
             print("verified User:", user)
-            return user.id
+            return user
         except CustomUser.DoesNotExist:
             raise Http404
 
