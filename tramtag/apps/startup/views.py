@@ -10,6 +10,7 @@ from apps.utils.request_helper import RequestHelper
 class StartupView(APIView):
     def post(self, request):
         request_data = request.data
+        print(request_data)
 
         request_response = RequestHelper.post_object(
             self, request_data, StartupSerializer, "Startup created successfully!!!"

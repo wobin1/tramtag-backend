@@ -32,7 +32,9 @@ class StartupSerializer(serializers.ModelSerializer):
                 startup_phone_number = validated_data["phone_number"],
                 StartupSerializer = validated_data["phone_number"],
                 startup_description = validated_data["startup_description"],
-                startup_website_url = validated_data["startup_website_url"]
+                startup_website_url = validated_data["startup_website_url"],
+                founders = validated_data["founders"],
+                additional_info = validate_data["additional_info"]
                 
             )
 
